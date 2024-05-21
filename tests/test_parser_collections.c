@@ -29,14 +29,14 @@ int main()
     LSData* res;
 
     // Test list of ints
-    assert(parse_lizscript("`(1 2 3)"));
+    assert(parse_lscript("`(1 2 3)"));
     assert(test_list_element(0, LS_INT_T) == 1);
     assert(test_list_element(1, LS_INT_T) == 2);
     assert(test_list_element(2, LS_INT_T) == 3);
     reset_progheap();
 
     // Test list of mixed atoms
-    assert(parse_lizscript("`( 1 '2' -3.2 foo #f )"));
+    assert(parse_lscript("`( 1 '2' -3.2 foo #f )"));
     assert(test_list_element(0, LS_INT_T) == 1);
     assert(test_list_element(1, LS_CHAR_T) == '2');
     test_list_element(2, LS_FLOAT_T);
@@ -45,14 +45,14 @@ int main()
     reset_progheap();
 
     // Test list including a list
-    assert(parse_lizscript("`(1 `(2) 3)"));
+    assert(parse_lscript("`(1 `(2) 3)"));
     assert(test_list_element(0, LS_INT_T) == 1);
     test_list_element(1, LS_LIST_T);
     assert(test_list_element(2, LS_INT_T) == 3);
     reset_progheap();
 
     // Test expression with single arg
-    assert(parse_lizscript("(foo 5)"));
+    assert(parse_lscript("(foo 5)"));
     res = get_node(0);
     assert(res->type == LS_FUNC_T);
     assert(strcmp(res->sym, "foo") == 0);
@@ -60,7 +60,7 @@ int main()
     reset_progheap();
 
     // Test deeply nested expression
-    assert(parse_lizscript("(let `(`(n 5) `(k 3)) (* n (+ k 3))"));
+    assert(parse_lscript("(let `(`(n 5) `(k 3)) (* n (+ k 3))"));
 
     return 0;
 }
